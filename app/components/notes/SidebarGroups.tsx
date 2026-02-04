@@ -1,6 +1,9 @@
 "use client";
 
 import { trpc } from "@/trpc/client";
+import { Plus } from "lucide-react";
+import InputModal from "../common/InputModal";
+import { useState } from "react";
 
 export default function SidebarGroups({
   selectedGroupId,
@@ -9,11 +12,45 @@ export default function SidebarGroups({
   selectedGroupId: number | null;
   onSelectGroup: (id: number) => void;
 }) {
-  const { data: groups, isLoading } = trpc.noteGroupsRouter.list.useQuery();
-
+  const {
+    data: groups,
+    isLoading,
+    refetch,
+  } = trpc.noteGroupsRouter.list.useQuery();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const createGroup = trpc.noteGroupsRouter.create.useMutation({
+    onSuccess: () => {
+      console.log("Group created!");
+      // Optionally refetch groups list
+      refetch();
+    },
+  });
+  const handleAddGroup = (name: string) => {
+    console.log("New group:", name);
+    // When user submits form
+    createGroup.mutate({ title: name });
+    // call trpc.noteGroups.create.mutate({ title: name });
+  };
   return (
     <div className="w-1/5 bg-gray-100 border-r p-4 space-y-2">
-      <h2 className="text-lg font-semibold mb-4">Groups</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold">Groups</h2>
+        <button
+          className="p-1.5 rounded-lg hover:bg-gray-200"
+          title="Add Group"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          <Plus className="w-5 h-5 text-gray-700" />
+        </button>
+      </div>
+      <InputModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddGroup}
+        label="New Group Name"
+      />
       {isLoading ? (
         <p>Loading...</p>
       ) : (

@@ -25,7 +25,7 @@ export default function NotesApp() {
         onSelectNote={(id) => setSelectedNoteId(id)}
       />
 
-      <NoteContent noteId={selectedNoteId} />
+      <NoteContent key={selectedNoteId} noteId={selectedNoteId} />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { tagsRouter } from "./tags";
 import { userRouter } from "./user";
 
 export const appRouter = router({
-  notesRouter,
+  notes: notesRouter,
   userRouter,
   noteGroupsRouter,
   tagsRouter,

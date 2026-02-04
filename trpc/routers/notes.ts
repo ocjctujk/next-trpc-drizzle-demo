@@ -51,4 +51,34 @@ export const notesRouter = router({
         .returning();
       return note;
     }),
+
+  // ✅ Update existing note
+  update: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        title: z.string().optional(),
+        content: z.string().optional(),
+        groupId: z.number().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const { id, ...updateFields } = input;
+
+      // Prevent empty update
+      if (Object.keys(updateFields).length === 0) {
+        throw new Error("No fields provided to update.");
+      }
+
+      const [updatedNote] = await db
+        .update(notes)
+        .set({
+          ...updateFields,
+          updatedAt: new Date(),
+        })
+        .where(eq(notes.id, id))
+        .returning();
+
+      return updatedNote;
+    }),
 });
