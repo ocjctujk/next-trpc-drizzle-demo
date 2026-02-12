@@ -2,11 +2,11 @@ import { z } from "zod";
 import { db } from "@/src";
 import { noteGroups } from "@/src/db/schema";
 import { publicProcedure, router } from "../trpc";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 export const noteGroupsRouter = router({
   list: publicProcedure.query(async () => {
-    return await db.select().from(noteGroups);
+    return await db.select().from(noteGroups).orderBy(desc(noteGroups.createdAt));
   }),
 
   byId: publicProcedure

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { db } from "@/src";
 import { notes } from "@/src/db/schema";
 import { publicProcedure, router } from "../trpc";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 export const notesRouter = router({
   // Fetch all notes
@@ -17,7 +17,8 @@ export const notesRouter = router({
       return await db
         .select()
         .from(notes)
-        .where(eq(notes.groupId, input.groupId));
+        .where(eq(notes.groupId, input.groupId))
+        .orderBy(desc(notes.createdAt))
     }),
 
   // Fetch single note
