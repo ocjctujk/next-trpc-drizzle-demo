@@ -2,7 +2,6 @@ import { z } from "zod";
 import { db } from "@/src";
 import { tags } from "@/src/db/schema";
 import { publicProcedure, router } from "../trpc";
-import { eq } from "drizzle-orm";
 
 export const tagsRouter = router({
   list: publicProcedure.query(async () => {

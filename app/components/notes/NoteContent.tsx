@@ -1,7 +1,7 @@
 "use client";
 
 import { trpc } from "@/trpc/client";
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 
 export default function NoteContent({ noteId }: { noteId: number | null }) {
   const [content, setContent] = useState("");
@@ -13,12 +13,16 @@ export default function NoteContent({ noteId }: { noteId: number | null }) {
     refetch,
   } = trpc.notes.byId.useQuery({ id: noteId as number }, { enabled: !!noteId });
 
-  // 2. Sync local state when the fetched note changes
-  useEffect(() => {
+  const syncNoteContent = useEffectEvent(() => {
     if (note) {
       setContent(note.content ?? "");
     }
-  }, [note]);
+  });
+
+  // ✅ Use the event inside an effect — no cascading renders
+  useEffect(() => {
+    syncNoteContent();
+  }, [note?.id]); // only re-run when a different note loads
 
   const updateNote = trpc.notes.update.useMutation({
     onSuccess: () => {
