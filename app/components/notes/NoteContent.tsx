@@ -41,7 +41,7 @@ export default function NoteContent({ noteId }: { noteId: number | null }) {
   if (!noteId) {
     return (
       <div className="flex-1 p-6">
-        <p className="text-gray-500">Select a note to view its content</p>
+        <p className="text-muted-foreground">Select a note to view its content</p>
       </div>
     );
   }
@@ -57,7 +57,7 @@ export default function NoteContent({ noteId }: { noteId: number | null }) {
   if (!note) {
     return (
       <div className="flex-1 p-6">
-        <p className="text-gray-500">Note not found</p>
+        <p className="text-muted-foreground">Note not found</p>
       </div>
     );
   }
@@ -70,10 +70,10 @@ export default function NoteContent({ noteId }: { noteId: number | null }) {
           <button
             onClick={handleSave}
             disabled={updateNote.isPending}
-            className={`px-4 py-2 rounded-lg text-white transition-colors ${
+            className={`px-4 py-2 rounded-lg text-primary-foreground transition-colors ${
               updateNote.isPending
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
+                ? "bg-muted cursor-not-allowed"
+                : "bg-primary hover:bg-primary/90"
             }`}
           >
             {updateNote.isPending ? "Saving..." : "Save"}
@@ -81,7 +81,7 @@ export default function NoteContent({ noteId }: { noteId: number | null }) {
         </div>
 
         <textarea
-          className="flex-1 w-full resize-none bg-transparent outline-none text-gray-800 text-base leading-relaxed placeholder-gray-400"
+          className="flex-1 w-full resize-none bg-transparent outline-none text-foreground text-base leading-relaxed placeholder-muted-foreground"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Start typing your note..."

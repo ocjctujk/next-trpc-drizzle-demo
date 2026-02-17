@@ -38,17 +38,17 @@ export default function NotesList({
   };
 
   return (
-    <div className="w-1/4 bg-gray-50 border-r p-4">
+    <div className="w-1/4  border-r p-4">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold">Notes</h2>
         <button
-          className="p-1.5 rounded-lg hover:bg-gray-200"
+          className="p-1.5 rounded-lg hover:bg-secondary"
           title="Add Group"
           onClick={() => {
             setIsModalOpen(true);
           }}
         >
-          <Plus className="w-5 h-5 text-gray-700" />
+          <Plus className="w-5 h-5 text-foreground" />
         </button>
       </div>
       <InputModal
@@ -58,7 +58,7 @@ export default function NotesList({
         label="New Note Title"
       />
       {!groupId ? (
-        <p className="text-gray-500">Select a group to view notes</p>
+        <p className="text-muted-foreground">Select a group to view notes</p>
       ) : isLoading ? (
         <p>Loading...</p>
       ) : notes?.length ? (
@@ -66,15 +66,15 @@ export default function NotesList({
           <div
             key={note.id}
             onClick={() => onSelectNote(note.id)}
-            className={`cursor-pointer p-2 rounded-lg hover:bg-gray-200 ${
-              selectedNoteId === note.id ? "bg-gray-300 font-medium" : ""
+            className={`cursor-pointer p-2 rounded-lg hover:bg-secondary ${
+              selectedNoteId === note.id ? "bg-secondary font-medium" : ""
             }`}
           >
             {note.title}
           </div>
         ))
       ) : (
-        <p className="text-gray-500">No notes in this group</p>
+        <p className="text-muted-foreground">No notes in this group</p>
       )}
     </div>
   );

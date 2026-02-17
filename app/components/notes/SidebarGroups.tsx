@@ -32,17 +32,17 @@ export default function SidebarGroups({
     // call trpc.noteGroups.create.mutate({ title: name });
   };
   return (
-    <div className="w-1/5 bg-gray-100 border-r p-4 space-y-2">
+    <div className="w-1/5 border-r p-4 space-y-2">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold">Groups</h2>
         <button
-          className="p-1.5 rounded-lg hover:bg-gray-200"
+          className="p-1.5 rounded-lg hover:bg-secondary"
           title="Add Group"
           onClick={() => {
             setIsModalOpen(true);
           }}
         >
-          <Plus className="w-5 h-5 text-gray-700" />
+          <Plus className="w-5 h-5 text-foreground" />
         </button>
       </div>
       <InputModal
@@ -58,8 +58,8 @@ export default function SidebarGroups({
           <div
             key={group.id}
             onClick={() => onSelectGroup(group.id)}
-            className={`cursor-pointer p-2 rounded-lg hover:bg-gray-200 ${
-              selectedGroupId === group.id ? "bg-gray-300 font-medium" : ""
+            className={`cursor-pointer p-2 rounded-lg hover:bg-secondary ${
+              selectedGroupId === group.id ? "font-medium" : ""
             }`}
           >
             {group.title}

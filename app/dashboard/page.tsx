@@ -10,7 +10,7 @@ export default function NotesApp() {
   const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null);
 
   return (
-    <div className="flex h-screen text-gray-800">
+    <div className="flex h-screen">
       <SidebarGroups
         selectedGroupId={selectedGroupId}
         onSelectGroup={(id) => {
